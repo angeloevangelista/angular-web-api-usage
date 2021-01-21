@@ -1,1 +1,74 @@
 <h1>Cliente</h1>
+
+<p *ngIf="!clientes"><em>Carregando...</em></p>
+
+<form [formGroup]="form" (ngSubmit)="handleSubmit()" action="#">
+  <strong>{{ formTitle }}</strong>
+
+  <div>
+    <div class="input-group">
+      <label for="nome">Nome</label>
+      <input required id="nome" type="text" formControlName="nome" />
+    </div>
+    <div class="input-group">
+      <label for="endereco">Endereço</label>
+      <input required id="endereco" type="text" formControlName="endereco" />
+    </div>
+    <div class="input-group">
+      <label for="cidade">Cidade</label>
+      <input required id="cidade" type="text" formControlName="cidade" />
+    </div>
+    <div class="input-group">
+      <label for="email">E-mail</label>
+      <input required id="email" type="text" formControlName="email" />
+    </div>
+
+    <button type="button" (click)="handleCancel($event)" class="btn-secondary">
+      Cancelar
+    </button>
+    <button [disabled]="form.invalid" class="btn-primary" type="submit">
+      Salvar
+    </button>
+  </div>
+</form>
+
+<table
+  class="table table-striped"
+  aria-labelledby="tableLabel"
+  *ngIf="clientes"
+>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Endereço</th>
+      <th>Cidade</th>
+      <th>E-mail</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cliente of clientes">
+      <td>{{ cliente.id }}</td>
+      <td>{{ cliente.nome }}</td>
+      <td>{{ cliente.endereco }}</td>
+      <td>{{ cliente.cidade }}</td>
+      <td>{{ cliente.email }}</td>
+      <td>
+        <button (click)="handleEdit(cliente)">
+          <img src="../../../assets/edit.svg" alt="Edit" />
+        </button>
+      </td>
+      <td>
+        <button (click)="deleteCliente(cliente.id)">
+          <img
+            [attr.data-message-id]="cliente.id"
+            src="../../../assets/trash-2.svg"
+            alt="Delete"
+          />
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

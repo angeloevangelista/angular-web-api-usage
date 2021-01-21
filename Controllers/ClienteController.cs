@@ -50,10 +50,15 @@ namespace angular_web_api_usage.Controllers
         return new BadRequestResult();
       }
 
-      _context.Entry<Cliente>(cliente).State = EntityState.Modified;
+      clienteEncontrado.Nome = cliente.Nome;
+      clienteEncontrado.Email = cliente.Email;
+      clienteEncontrado.Endereco = cliente.Endereco;
+      clienteEncontrado.Cidade = cliente.Cidade;
+
+      _context.Entry<Cliente>(clienteEncontrado).State = EntityState.Modified;
       _context.SaveChanges();
 
-      return new OkObjectResult(cliente);
+      return new OkObjectResult(clienteEncontrado);
     }
 
     [HttpDelete]
